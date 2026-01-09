@@ -2,6 +2,11 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+@theme {
+  /* This tells Tailwind to use the .dark class on the html/body tag */
+  --variant-dark: .dark &;
+}
+
 html {
   scrollbar-gutter: stable;
   @apply duration-300;

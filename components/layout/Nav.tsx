@@ -1,5 +1,6 @@
 "use client";
 
+import { useTheme } from "next-themes";
 import PrimaryButton from "../ui/PrimaryButton";
 import Link from "next/link";
 import Image from "next/image";
@@ -7,6 +8,8 @@ import Image from "next/image";
 const navLinkStyles = "text-gray-800 dark:text-gray-300 transition-colors p-2.5 hover:text-orange-400";
 
 function Nav() {
+  const { theme, setTheme } = useTheme();
+
   function handleSignin() {
     console.log("Sign in");
   }
@@ -39,6 +42,7 @@ function Nav() {
           </Link>
         </div>
         <PrimaryButton text="Sign in" click={handleSignin} />
+        <PrimaryButton text="Theme" click={() => setTheme(theme === "light" ? "dark" : "light")} />
       </div>
     </nav>
   );
