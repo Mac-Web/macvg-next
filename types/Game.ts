@@ -14,4 +14,6 @@ export type GameType = {
   thumb: string;
   featured?: boolean;
   download?: boolean;
+  new?: boolean;
+  trending?: number;
 };

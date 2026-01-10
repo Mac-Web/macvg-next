@@ -10,7 +10,9 @@ function HomeGames() {
   const [search, setSearch] = useState<string>("");
   const [games, setGames] = useState<GameType[]>([]);
   const displayed = useMemo(() => {
-    return games.filter((game: GameType) => game.name.toLocaleLowerCase().includes(search.trim().toLocaleLowerCase()));
+    return games
+      .filter((game: GameType) => game.name.toLocaleLowerCase().includes(search.trim().toLocaleLowerCase()))
+      .sort((a, b) => a.name.localeCompare(b.name));
   }, [games, search]);
   const searchBarRef = useRef<HTMLDivElement>(null);
 
