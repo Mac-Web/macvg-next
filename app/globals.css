@@ -8,10 +8,13 @@
 }
 
 html {
-  scrollbar-gutter: stable;
   @apply duration-300;
 }
 
 body {
   @apply bg-gray-200 dark:bg-gray-950 duration-300;
+}
+
+.modal-open {
+  overflow: hidden;
 }

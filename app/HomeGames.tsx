@@ -8,11 +8,13 @@ import GameCard from "@/components/ui/GameCard";
 import Dropdown from "@/components/ui/Dropdown";
 
 function HomeGames() {
+  const [loading, setLoading] = useState<boolean>(true);
   const [search, setSearch] = useState<string>("");
   const [games, setGames] = useState<GameType[]>([]);
   const [displayedGames, setDisplayedGames] = useState<GameType[]>([]);
   const [sortMethod, setSortMethod] = useState<string>("a");
   const [ascending, setAscending] = useState<boolean>(true);
+  const [randomIndex, setSetRandomIndex] = useState<number | null>(null);
   const searchBarRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -23,6 +25,10 @@ function HomeGames() {
     }
     fetchGames();
   }, []);
+
+  useEffect(() => {
+    if (games.length > 0) setLoading(false);
+  }, [games]);
 
   useEffect(() => {
     setDisplayedGames(
@@ -55,21 +61,35 @@ function HomeGames() {
     inputElement.focus();
   }
 
+  function handleRandom() {
+    setSetRandomIndex(Math.floor(Math.random() * games.length));
+  }
+
   return (
     <div className="flex flex-col items-center gap-y-10 pb-10">
-      <div className="border-2 border-gray-400 dark:border-gray-700 rounded-lg w-1/2 flex items-center pr-2" ref={searchBarRef}>
+      <div
+        className="border-2 border-gray-400 dark:border-gray-700 rounded-lg w-1/2 flex gap-x-2 items-center pr-2"
+        ref={searchBarRef}
+      >
         <Input placeholder="Search 500+ free online games" value={search} onchange={setSearch} />
-
         {search.length > 0 && (
           <div
             className="flex items-center justify-center hover:bg-gray-300 hover:dark:bg-gray-800 rounded cursor-pointer 
-          duration-300 w-10 h-10"
+          duration-300 w-8.5 h-8.5"
             title="Clear search"
             onClick={handleClear}
           >
             <Image className="invert dark:invert-0" src="/icons/ui/close.svg" alt="Clear search" width={20} height={20} />
           </div>
         )}
+        <div
+          className="flex items-center justify-center hover:bg-gray-300 hover:dark:bg-gray-800 rounded cursor-pointer 
+          duration-300 w-8.5 h-8.5"
+          title="Random game"
+          onClick={handleRandom}
+        >
+          <Image className="invert dark:invert-0" src="/icons/ui/random.svg" alt="Random game" width={20} height={20} />
+        </div>
       </div>
       <div className="w-[50%] flex gap-x-5 justify-center">
         <Dropdown
@@ -119,6 +139,7 @@ function HomeGames() {
               label: `Downloadable (${games.filter((game) => game.download).length})`,
               onClick: () => setDisplayedGames(games.filter((game) => game.download)),
             },
+            //TODO: DRY derive this from array
           ]}
           search={search}
         />
@@ -139,11 +160,18 @@ function HomeGames() {
           />
         </button>
       </div>
+      {randomIndex && (
+        <div className="flex flex-wrap gap-2 justify-center">
+          <GameCard game={games[randomIndex]} />
+        </div>
+      )}
       <div className="flex flex-wrap gap-2 justify-center">
         {displayedGames.length > 0 ? (
           displayedGames.map((game: GameType) => {
             return <GameCard key={game.id} game={game} />;
           })
+        ) : loading ? (
+          <div>Loading...</div>
         ) : (
           <div>
             No games found. Request a game{" "}
