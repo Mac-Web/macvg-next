@@ -17,3 +17,14 @@ export type GameType = {
   new?: boolean;
   trending?: number;
 };
+
+export type CommentType = {
+  content: string;
+  createdAt: Date;
+  id: string;
+  likes: string[];
+  updatedAt: Date;
+  userID: string;
+  userName: string;
+  _id: string;
+};

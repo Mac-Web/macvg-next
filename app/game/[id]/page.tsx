@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { GameType } from "@/types/Game";
 import GameFrame from "./GameFrame";
+import Comments from "./Comments";
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
   const { id } = await params;
@@ -95,6 +96,7 @@ async function Page({ params }: { params: { id: string } }) {
                 <li>Build: {game.build}</li>
               </ul>
             </div>
+            <Comments id={game.id} />
             {/*ad*/}
           </div>
         </div>
