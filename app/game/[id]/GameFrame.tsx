@@ -11,6 +11,13 @@ const toolbarIconStyles = "w-5 duration-300 cursor-pointer invert dark:invert-0 
 function GameFrame({ game }: { game: GameType }) {
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
   const [shareModalOpen, setShareModalOpen] = useState<boolean>(false);
+  const [recents, setRecents] = useState<number[]>(() => {
+    if (typeof window !== "undefined") {
+      return JSON.parse(localStorage.getItem("macvg-recents")!) || [];
+    } else {
+      return [];
+    }
+  });
   const [favorites, setFavorites] = useState<number[]>(() => {
     if (typeof window !== "undefined") {
       return JSON.parse(localStorage.getItem("macvg-favorites")!) || [];
@@ -41,8 +48,16 @@ function GameFrame({ game }: { game: GameType }) {
   }, [favorites]);
 
   useEffect(() => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem("macvg-recents", JSON.stringify(recents));
+    }
+    //TODO: add actual account backend logic here
+  }, [recents]);
+
+  useEffect(() => {
     const existingFavorites = JSON.parse(localStorage.getItem("macvg-favorites")!);
     setFavorited(existingFavorites.includes(game.id));
+    setRecents([...recents.filter((recent) => recent !== game.id), game.id]);
   }, [game.id]);
 
   useEffect(() => {
