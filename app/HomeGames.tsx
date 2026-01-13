@@ -15,6 +15,13 @@ function HomeGames() {
   const [sortMethod, setSortMethod] = useState<string>("a");
   const [ascending, setAscending] = useState<boolean>(true);
   const [randomIndex, setSetRandomIndex] = useState<number | null>(null);
+  const [favorites, setFavorites] = useState<number[]>(() => {
+    if (typeof window !== "undefined") {
+      return JSON.parse(localStorage.getItem("macvg-favorites")!) || [];
+    } else {
+      return [];
+    }
+  });
   const searchBarRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -65,10 +72,17 @@ function HomeGames() {
     setSetRandomIndex(Math.floor(Math.random() * games.length));
   }
 
+  function handleClearFavorites() {
+    if (confirm("Are you sure you want to remove all your favorited games? This action cannot be undone.")) {
+      localStorage.removeItem("macvg-favorites");
+      setFavorites([]);
+    }
+  }
+
   return (
     <div className="flex flex-col items-center gap-y-10 pb-10">
       <div
-        className="border-2 border-gray-400 dark:border-gray-700 rounded-lg w-1/2 flex gap-x-2 items-center pr-2"
+        className="w-full md:w-[50%] border-2 border-gray-400 dark:border-gray-700 rounded-lg flex gap-x-2 items-center pr-2"
         ref={searchBarRef}
       >
         <Input placeholder="Search 500+ free online games" value={search} onchange={setSearch} />
@@ -91,7 +105,7 @@ function HomeGames() {
           <Image className="invert dark:invert-0" src="/icons/ui/random.svg" alt="Random game" width={20} height={20} />
         </div>
       </div>
-      <div className="w-[50%] flex gap-x-5 justify-center">
+      <div className="w-full lg:w-[50%] flex gap-x-5 justify-center">
         <Dropdown
           label="Sort By: Name"
           options={[
@@ -163,6 +177,24 @@ function HomeGames() {
       {randomIndex && (
         <div className="flex flex-wrap gap-2 justify-center">
           <GameCard game={games[randomIndex]} />
+        </div>
+      )}
+
+      {favorites?.length > 0 && !loading && (
+        <div className="border-2 w-full border-gray-700 relative flex flex-col items-center py-2 px-7 gap-y-5 rounded">
+          <h2 className="text-2xl text-center text-black dark:text-white font-bold ">Favorites</h2>
+          <div
+            className="w-10 h-10 absolute top-1 right-2 p-2.5 cursor-pointer rounded flex justify-center items-center hover:bg-gray-300 hover:dark:bg-gray-900 duration-300"
+            title="Clear favorites"
+            onClick={handleClearFavorites}
+          >
+            <Image src="/icons/ui/delete.svg" alt="Delete icon" width={25} height={25} className="invert dark:invert-0" />
+          </div>
+          <div className="flex flex-wrap justify-center gap-3 pb-2">
+            {favorites.map((favorite) => (
+              <GameCard key={favorite} game={games.find((game) => game.id === favorite)!} />
+            ))}
+          </div>
         </div>
       )}
       <div className="flex flex-wrap gap-2 justify-center">

@@ -16,7 +16,7 @@ function Nav() {
 
   return (
     <nav
-      className="flex items-center justify-between gap-x-2 border-b border-gray-700 px-5 md:px-20 lg:px-[calc(50%-550px)] h-17 z-5 
+      className="flex items-center justify-between gap-x-2 border-b border-gray-700 px-5 md:px-20 lg:px-[calc(50%-550px)] h-17 z-50 
     sticky top-0 bg-gray-200 dark:bg-gray-950"
     >
       <Link

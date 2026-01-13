@@ -48,7 +48,7 @@ function Dropdown({ label, options, search }: DropdownProps) {
         {dropdownLabel}
       </div>
       {isOpen && (
-        <ul className="bg-gray-300 dark:bg-gray-800 w-full absolute top-15 z-100 rounded-lg list-none text-center p-2 flex flex-col gap-y-2 duration-300">
+        <ul className="bg-gray-300 dark:bg-gray-800 w-full absolute top-15 z-10 rounded-lg list-none text-center p-2 flex flex-col gap-y-2 duration-300">
           {options.map((option, index) => (
             <li
               key={index}
