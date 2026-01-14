@@ -1,6 +1,7 @@
 "use client";
 
 import { useTheme } from "next-themes";
+import NavSearch from "../ui/NavSearch";
 import PrimaryButton from "../ui/PrimaryButton";
 import Link from "next/link";
 import Image from "next/image";
@@ -23,9 +24,11 @@ function Nav() {
         href="/"
         className="flex items-center gap-x-2 text-black dark:text-white text-lg duration-300 pr-5 py-2 font-bold
        hover:text-shadow-gray-400 hover:text-shadow-sm"
+        scroll={true}
       >
         <Image src="/logo.png" alt="MacWeb Logo" width={35} height={35} /> MacVG
       </Link>
+      <NavSearch />
       <div className="flex gap-x-3 items-center">
         <div className="md:flex items-center gap-x-3 hidden">
           <Link href="/new" className={navLinkStyles}>
