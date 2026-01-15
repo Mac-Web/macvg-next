@@ -1,15 +1,26 @@
 "use client";
 
 import { useTheme } from "next-themes";
+import { useEffect } from "react";
 import NavSearch from "../ui/NavSearch";
 import PrimaryButton from "../ui/PrimaryButton";
+import Logo from "./Logo";
 import Link from "next/link";
-import Image from "next/image";
 
-const navLinkStyles = "text-gray-800 dark:text-gray-300 transition-colors p-2.5 hover:text-orange-400";
+const navLinkStyles = "text-gray-800 dark:text-gray-300 transition-colors p-2.5 hover:text-primary";
 
 function Nav() {
   const { theme, setTheme } = useTheme();
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("macvg-themes");
+    if (savedTheme) {
+      const { primary, primaryHover, secondary } = JSON.parse(savedTheme);
+      document.documentElement.style.setProperty("--primary", primary);
+      document.documentElement.style.setProperty("--primary-hover", primaryHover);
+      document.documentElement.style.setProperty("--secondary", secondary);
+    }
+  }, []);
 
   function handleSignin() {
     console.log("Sign in");
@@ -26,7 +37,7 @@ function Nav() {
        hover:text-shadow-gray-400 hover:text-shadow-sm"
         scroll={true}
       >
-        <Image src="/logo.png" alt="MacWeb Logo" width={35} height={35} /> MacVG
+        <Logo /> MacVG
       </Link>
       <NavSearch />
       <div className="flex gap-x-3 items-center">

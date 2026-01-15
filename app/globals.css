@@ -3,8 +3,16 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  /* This tells Tailwind to use the .dark class on the html/body tag */
   --variant-dark: .dark &;
+  --color-primary: hsl(var(--primary));
+  --color-primary-hover: hsl(var(--primary-hover));
+  --color-secondary: hsl(var(--secondary));
+}
+
+:root {
+  --primary: 37 94% 50%;
+  --primary-hover: 37 94% 45%;
+  --secondary: 47 100% 50%;
 }
 
 html {

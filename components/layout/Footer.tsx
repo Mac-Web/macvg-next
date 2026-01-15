@@ -1,3 +1,4 @@
+import Logo from "./Logo";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -11,9 +12,10 @@ function Footer() {
       <div className={footerColumnStyles}>
         <Link
           href="/"
-          className="flex items-center gap-x-2 text-black dark:text-white text-lg duration-300 pr-5 py-2 font-bold hover:text-shadow-gray-400 hover:text-shadow-sm"
+          className="flex items-center gap-x-2 text-black dark:text-white text-lg duration-300 pr-5 py-2 font-bold
+           hover:text-shadow-gray-400 hover:text-shadow-sm"
         >
-          <Image src="/logo.png" alt="MacVG Logo" width={30} height={30} /> MacVG
+          <Logo /> MacVG
         </Link>
         <div className="text-gray-800 dark:text-gray-100">
           &copy; {new Date().getFullYear()}{" "}
