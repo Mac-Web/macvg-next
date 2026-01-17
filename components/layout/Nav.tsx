@@ -2,14 +2,26 @@
 
 import { useTheme } from "next-themes";
 import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 import NavSearch from "../ui/NavSearch";
-import PrimaryButton from "../ui/PrimaryButton";
 import Logo from "./Logo";
 import Link from "next/link";
 
 const navLinkStyles = "text-gray-800 dark:text-gray-300 transition-colors p-2.5 hover:text-primary";
 
-function Nav() {
+function cloak(cloaker?: object) {
+  const savedCloaker = localStorage.getItem("macvg-cloaker");
+  if (savedCloaker) {
+    const { name, icon } = cloaker || JSON.parse(savedCloaker);
+    //TODO: add dynamic favicon parsing this is going super well
+    setTimeout(() => {
+      document.title = name;
+    }, 100);
+  }
+}
+
+function Nav({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
   const { theme, setTheme } = useTheme();
 
   useEffect(() => {
@@ -20,11 +32,18 @@ function Nav() {
       document.documentElement.style.setProperty("--primary-hover", primaryHover);
       document.documentElement.style.setProperty("--secondary", secondary);
     }
+    const cloakerListener = (e: any) => {
+      cloak(e.detail?.cloaker);
+    };
+    window.addEventListener("cloaker-change", cloakerListener);
+    return () => {
+      window.removeEventListener("cloaker-change", cloakerListener);
+    };
   }, []);
 
-  function handleSignin() {
-    console.log("Sign in");
-  }
+  useEffect(() => {
+    cloak();
+  }, [pathname]);
 
   return (
     <nav
@@ -55,8 +74,8 @@ function Nav() {
             Settings
           </Link>
         </div>
-        <PrimaryButton text="Sign in" click={handleSignin} />
-        <PrimaryButton text="Theme" click={() => setTheme(theme === "light" ? "dark" : "light")} />
+        {children}
+        {/*<PrimaryButton text="Theme" click={() => setTheme(theme === "light" ? "dark" : "light")} />*/}
       </div>
     </nav>
   );

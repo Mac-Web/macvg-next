@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { GameType } from "@/types/Game";
 import Hero from "@/components/layout/Hero";
 import ThemeDropdown from "./ThemeDropdown";
+import AboutBlank from "./AboutBlank";
+import Cloak from "./Cloak";
+import Delete from "./Delete";
 
 export const metadata: Metadata = {
   title: "Settings | MacVG",
@@ -27,14 +30,9 @@ async function Page() {
           <h2 className="text-black dark:text-white text-2xl font-bold">Themes</h2>
           <ThemeDropdown />
         </div>
-        <div className="flex flex-col items-center gap-y-7 w-full">
-          <h2 className="text-black dark:text-white text-2xl font-bold">Tab Cloaker</h2>
-          Coming soon!
-        </div>
-        <div className="flex flex-col items-center gap-y-7 w-full">
-          <h2 className="text-black dark:text-white text-2xl font-bold">About:blank embedder</h2>
-          Coming soon!
-        </div>
+        <Cloak />
+        <AboutBlank />
+        <Delete />
       </div>
     </div>
   );

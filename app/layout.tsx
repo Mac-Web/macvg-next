@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import Theme from "./Theme";
 import Nav from "@/components/layout/Nav";
 import Footer from "@/components/layout/Footer";
+import User from "@/components/ui/User";
 import "./globals.css";
 
 const inter = Inter({
@@ -40,7 +41,9 @@ export default function RootLayout({
     <html suppressHydrationWarning>
       <body className={`${inter.variable} antialiased`}>
         <Theme>
-          <Nav />
+          <Nav>
+            <User />
+          </Nav>
           {children}
           <Footer />
         </Theme>
