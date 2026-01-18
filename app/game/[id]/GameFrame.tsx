@@ -27,6 +27,8 @@ function GameFrame({ game }: { game: GameType }) {
   });
   const [favorited, setFavorited] = useState<boolean>(false);
   const gameFrameRef = useRef<HTMLDivElement>(null);
+  const gameIFrameRef = useRef<HTMLIFrameElement>(null);
+  const gameActive = useRef<boolean>(false);
 
   useEffect(() => {
     const handleFullscreen = () => {
@@ -37,6 +39,33 @@ function GameFrame({ game }: { game: GameType }) {
 
     return () => {
       window.removeEventListener("fullscreenchange", handleFullscreen);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!gameFrameRef.current) return;
+
+    const handleMouseEnter = () => {
+      gameActive.current = true;
+    };
+    const handleMouseLeave = () => {
+      gameActive.current = false;
+    };
+    const focusInterval = setInterval(() => {
+      if (gameActive.current && document.activeElement !== gameIFrameRef.current) {
+        if (gameIFrameRef.current) gameIFrameRef.current.focus();
+      }
+    }, 1000);
+
+    gameFrameRef.current.addEventListener("mouseenter", handleMouseEnter);
+    gameFrameRef.current.addEventListener("mouseleave", handleMouseLeave);
+
+    return () => {
+      if (gameFrameRef.current) {
+        gameFrameRef.current.removeEventListener("mouseenter", handleMouseEnter);
+        gameFrameRef.current.removeEventListener("mouseleave", handleMouseLeave);
+      }
+      clearInterval(focusInterval);
     };
   }, []);
 
@@ -92,6 +121,7 @@ function GameFrame({ game }: { game: GameType }) {
           isFullscreen ? "h-[calc(100vh-45px)]" : "h-125"
         } border-0 m-0 p-0`}
         src={game.link}
+        ref={gameIFrameRef}
         tabIndex={-1}
       ></iframe>
       <div className="bg-gray-300 dark:bg-gray-800 h-11 text-lg font-bold flex justify-between items-center px-7">

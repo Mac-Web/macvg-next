@@ -13,6 +13,7 @@ function HomeGames() {
   const [games, setGames] = useState<GameType[]>([]);
   const [displayedGames, setDisplayedGames] = useState<GameType[]>([]);
   const [sortMethod, setSortMethod] = useState<string>("a");
+  const [visibleCount, setVisibleCount] = useState<number>(50);
   const [ascending, setAscending] = useState<boolean>(true);
   const [randomIndex, setSetRandomIndex] = useState<number | null>(null);
   const [favorites, setFavorites] = useState<number[]>(() => {
@@ -24,13 +25,28 @@ function HomeGames() {
   });
   const searchBarRef = useRef<HTMLDivElement>(null);
 
+  const handleScroll = () => {
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 200) {
+      setVisibleCount((prev) => Math.min(prev + 50, 500));
+    }
+  };
+
   useEffect(() => {
+    // try {
+    //   (window.adsbygoogle = window.adsbygoogle || []).push({});
+    // } catch (e) {
+    //   console.error("Ad failed to load", e);
+    // }
+    //TODO: ad code
     async function fetchGames() {
       const games = await fetch("/games.json");
       const result = await games.json();
       setGames(result.games);
     }
     fetchGames();
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   useEffect(() => {
@@ -41,7 +57,7 @@ function HomeGames() {
     setDisplayedGames(
       games
         .filter((game: GameType) => game.name.toLocaleLowerCase().includes(search.trim().toLocaleLowerCase()))
-        .sort((a, b) => a.name.localeCompare(b.name))
+        .sort((a, b) => a.name.localeCompare(b.name)),
     );
     setAscending(true);
   }, [games, search]);
@@ -56,7 +72,7 @@ function HomeGames() {
         break;
       case "r":
         setDisplayedGames(
-          [...displayedGames].sort((a, b) => new Date(a.releaseDate).getTime() - new Date(b.releaseDate).getTime())
+          [...displayedGames].sort((a, b) => new Date(a.releaseDate).getTime() - new Date(b.releaseDate).getTime()),
         );
         break;
     }
@@ -199,7 +215,7 @@ function HomeGames() {
       )}
       <div className="flex flex-wrap gap-2 justify-center">
         {displayedGames.length > 0 ? (
-          displayedGames.map((game: GameType) => {
+          displayedGames.slice(0, visibleCount).map((game: GameType) => {
             return <GameCard key={game.id} game={game} />;
           })
         ) : loading ? (

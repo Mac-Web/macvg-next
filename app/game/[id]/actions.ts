@@ -4,10 +4,17 @@ import { dbConnect } from "@/lib/db";
 import { Game } from "@/models/Game";
 import { revalidatePath } from "next/cache";
 
-export async function createComment(content: string, name: string, gameID: number, userID = crypto.randomUUID()) {
+type NewCommentType = {
+  userName: string;
+  content: string;
+  userID?: string;
+};
+
+export async function createComment(content: string, name: string, gameID: number, userID?: string) {
   try {
     await dbConnect();
-    const newComment = { userID: userID, userName: name, content: content };
+    const newComment: NewCommentType = { userName: name, content: content };
+    if (userID) newComment.userID = userID;
     const existingGame = await Game.findOne({ gameID });
     const newComments = [...existingGame.comments, newComment];
     await Game.findOneAndUpdate({ gameID }, { comments: newComments });

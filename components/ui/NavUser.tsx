@@ -40,19 +40,13 @@ function NavUser({ children, user }: NavUserProps) {
     <div className="relative">
       <motion.div
         whileHover={{ scale: 1.15 }}
-        className="rounded-full cursor-pointer"
-        title={user?.email ? user.email : ""}
+        className="rounded-full cursor-pointer w-10 h-10 border-2 border-gray-700 overflow-hidden"
         onClick={() => setMenuOpen(true)}
       >
-        {user?.image && (
-          <Image
-            src={user.image}
-            alt="Avatar"
-            title="Avatar"
-            width={40}
-            height={40}
-            className="rounded-full border-2 border-gray-700 cursor-pointer"
-          />
+        {user?.image ? (
+          <Image src={user.image} alt="Avatar" title="Avatar" width={40} height={40} />
+        ) : (
+          <Image src="/icons/profile/user.svg" alt="Avatar" title="Avatar" width={40} height={40} />
         )}
       </motion.div>
       {menuOpen && (

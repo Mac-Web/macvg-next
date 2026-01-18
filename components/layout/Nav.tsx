@@ -1,6 +1,5 @@
 "use client";
 
-import { useTheme } from "next-themes";
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 import NavSearch from "../ui/NavSearch";
@@ -13,16 +12,21 @@ function cloak(cloaker?: object) {
   const savedCloaker = localStorage.getItem("macvg-cloaker");
   if (savedCloaker) {
     const { name, icon } = cloaker || JSON.parse(savedCloaker);
+    console.log(name, icon);
+
     //TODO: add dynamic favicon parsing this is going super well
     setTimeout(() => {
       document.title = name;
+      if (icon) {
+        console.log(Array(document.getElementsByTagName("link"))[0]);
+        (document.querySelector('[rel="icon"]')! as HTMLLinkElement).href = icon;
+      }
     }, 100);
   }
 }
 
 function Nav({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const { theme, setTheme } = useTheme();
 
   useEffect(() => {
     const savedTheme = localStorage.getItem("macvg-themes");
@@ -75,7 +79,6 @@ function Nav({ children }: { children: React.ReactNode }) {
           </Link>
         </div>
         {children}
-        {/*<PrimaryButton text="Theme" click={() => setTheme(theme === "light" ? "dark" : "light")} />*/}
       </div>
     </nav>
   );
