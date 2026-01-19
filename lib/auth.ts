@@ -5,6 +5,8 @@ import Discord from "next-auth/providers/discord";
 import Facebook from "next-auth/providers/facebook";
 import Github from "next-auth/providers/github";
 
+const isProd = process.env.NODE_ENV === "production";
+
 export const authOptions: NextAuthOptions = {
   providers: [
     Google({
@@ -55,10 +57,10 @@ export const authOptions: NextAuthOptions = {
       name: "next-auth.session-token",
       options: {
         httpOnly: true,
-        sameSite: "none",
+        sameSite: isProd ? "none" : "lax",
         path: "/",
         domain: `.${process.env.NEXT_PUBLIC_ROOT_HOST}`,
-        secure: true,
+        secure: isProd,
       },
     },
   },
