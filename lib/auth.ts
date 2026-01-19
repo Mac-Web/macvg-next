@@ -55,10 +55,10 @@ export const authOptions: NextAuthOptions = {
       name: "next-auth.session-token",
       options: {
         httpOnly: true,
-        sameSite: "lax",
+        sameSite: "none",
         path: "/",
-        domain: ".macweb.com", //TODO: change this to env var so it works on prod
-        secure: false,
+        domain: `.${process.env.NEXT_PUBLIC_ROOT_HOST}`,
+        secure: true,
       },
     },
   },
