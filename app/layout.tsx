@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import Theme from "./Theme";
 import Nav from "@/components/layout/Nav";
 import Footer from "@/components/layout/Footer";
@@ -14,18 +15,18 @@ export const metadata: Metadata = {
   title: "Home | MacVG",
   description:
     "MacVG is the best online gaming platform on the web! Play 500+ free unblocked games on MacVG! From action and puzzle to retro classics, enjoy online gaming anytime, anywhere.",
-  authors: [{ name: "MacWeb", url: "https://macweb-next.vercel.app" }],
+  authors: [{ name: "MacWeb", url: "https://macweb.app" }],
   openGraph: {
     title: "MacVG",
     description:
       "MacVG is the best online gaming platform on the web! Play 500+ free unblocked games on MacVG! From action and puzzle to retro classics, enjoy online gaming anytime, anywhere.",
-    url: "https://macvg-next.vercel.app",
+    url: "https://macvg.macweb.app",
     siteName: "MacVG",
     images: [
       {
         url: "/logo.png",
-        width: 500,
-        height: 500,
+        width: 200,
+        height: 200,
       },
     ],
     type: "website",
@@ -48,6 +49,7 @@ export default function RootLayout({
           <Footer />
         </Theme>
       </body>
+      <GoogleAnalytics gaId="G-Y71QM9DR66" />
     </html>
   );
 }

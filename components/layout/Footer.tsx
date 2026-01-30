@@ -19,7 +19,7 @@ function Footer() {
         </Link>
         <div className="text-gray-800 dark:text-gray-100">
           &copy; {new Date().getFullYear()}{" "}
-          <a href="https://mac-web.github.io" target="_blank" className="underline">
+          <a href="https://macweb.app" target="_blank" className="underline">
             MacWeb
           </a>
         </div>
@@ -28,6 +28,11 @@ function Footer() {
           Made with ❤️ by{" "}
           <a href="https://github.com/tonymac129/" target="_blank" className="underline">
             Tony Macaroni
+          </a>
+        </div>
+        <div className="text-gray-800 dark:text-gray-100">
+          <a href="https://buymeacoffee.com/tonymac129" target="_blank" className="underline">
+            Buy me a coffee ☕
           </a>
         </div>
       </div>
@@ -63,10 +68,10 @@ function Footer() {
       </div>
       <div className={footerColumnStyles}>
         <h2 className={footerColumnTitleStyles}>MacWeb Apps</h2>
-        <a href="https://mac-web.github.io/" className={footerLinkStyles} target="_blank">
+        <a href="https://macweb.app" className={footerLinkStyles} target="_blank">
           MacWeb
         </a>
-        <a href="https://mac-web.github.io/maclearn/" className={footerLinkStyles} target="_blank">
+        <a href="https://maclearn.macweb.app" className={footerLinkStyles} target="_blank">
           MacLearn
         </a>
         <a href="https://mac-web.github.io/macideas/" className={footerLinkStyles} target="_blank">
@@ -82,13 +87,13 @@ function Footer() {
       <div className={footerColumnStyles}>
         <h2 className={footerColumnTitleStyles}>Social</h2>
         <div className="flex flex-wrap gap-5 items-center">
-          <a href="mailto:mac.web.company@gmail.com" target="_blank" title="Email us">
+          <a href="mailto:hello@macweb.app" target="_blank" title="Email us">
             <Image src="/icons/social/email.svg" alt="Email icon" width={25} height={25} className="invert dark:invert-0" />
           </a>
-          <a href="https://www.youtube.com/@Mac-Web" target="_blank" title="YouTube">
+          <a href="https://www.youtube.com/@MacWebApp" target="_blank" title="YouTube">
             <Image src="/icons/social/youtube.svg" alt="YouTube icon" width={25} height={25} className="invert dark:invert-0" />
           </a>
-          <a href="https://github.com/Mac-Web/macvg" target="_blank" title="Source code">
+          <a href="https://github.com/Mac-Web/macvg-next" target="_blank" title="Source code">
             <Image src="/icons/social/github.svg" alt="GitHub icon" width={25} height={25} className="invert dark:invert-0" />
           </a>
           <a href="https://discord.gg/UT7g2S2cBP" target="_blank" title="Join our server!">
