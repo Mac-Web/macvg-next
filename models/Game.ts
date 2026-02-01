@@ -18,8 +18,12 @@ const CommentSchema = new Schema(
       type: [String],
       default: [],
     },
+    date: {
+      type: Date,
+      default: new Date(),
+    },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 const GameSchema = new Schema({

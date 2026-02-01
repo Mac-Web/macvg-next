@@ -12,9 +12,6 @@ function cloak(cloaker?: object) {
   const savedCloaker = localStorage.getItem("macvg-cloaker");
   if (savedCloaker) {
     const { name, icon } = cloaker || JSON.parse(savedCloaker);
-    console.log(name, icon);
-
-    //TODO: add dynamic favicon parsing this is going super well
     setTimeout(() => {
       document.title = name;
       if (icon) {

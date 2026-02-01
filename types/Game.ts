@@ -26,5 +26,6 @@ export type CommentType = {
   updatedAt: Date;
   userID: string;
   userName: string;
+  date: Date;
   _id: string;
 };

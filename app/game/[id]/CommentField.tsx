@@ -13,6 +13,7 @@ type CommentFieldProps = {
 function CommentField({ id, session }: CommentFieldProps) {
   const sessionUser = session?.user;
   const [name, setName] = useState<string>(sessionUser?.name || "");
+  const [warning, setWarning] = useState<"" | "name" | "comment">("");
   const [content, setContent] = useState<string>("");
 
   async function handleComment() {
@@ -20,11 +21,16 @@ function CommentField({ id, session }: CommentFieldProps) {
       //TODO: show validation warning and stuff on frontend
       await createComment(content, name, id, (sessionUser?.email || sessionUser?.name)!);
       setContent("");
+      setWarning("");
+    } else if (content.trim().length > 0) {
+      setWarning("name");
+    } else {
+      setWarning("comment");
     }
   }
 
   return (
-    <div className={`flex flex-col gap-y-3 items-end ${sessionUser?.name ? "py-0" : "py-5"}`}>
+    <div className={`flex flex-col gap-y-3 ${sessionUser?.name ? "py-0" : "py-5"}`}>
       {sessionUser?.name ? (
         <div className="self-start text-sm">Commenting as {sessionUser.name}</div>
       ) : (
@@ -42,6 +48,11 @@ function CommentField({ id, session }: CommentFieldProps) {
         value={content}
         onChange={(e) => setContent(e.target.value)}
       ></textarea>
+      {(warning === "name" || warning === "comment") && (
+        <div className="text-red-500 text-sm">
+          {warning === "name" ? "Please put a name before you comment!" : "Enter a comment first..."}
+        </div>
+      )}
       <PrimaryButton text="Create comment" click={handleComment} />
     </div>
   );

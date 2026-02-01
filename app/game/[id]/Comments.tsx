@@ -3,7 +3,9 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { dbConnect } from "@/lib/db";
 import { Game } from "@/models/Game";
+import { likeComment } from "./actions";
 import CommentField from "./CommentField";
+import LikeComment from "./LikeComment";
 
 const gameInfoSectionStyles =
   "bg-gray-300 dark:bg-gray-800 rounded py-4 px-7 text-gray-700 dark:text-gray-300 text-lg leading-7 flex flex-col gap-y-2";
@@ -29,9 +31,16 @@ async function Comments({ id }: { id: number }) {
                   <div className="text-base flex items-center">
                     <span className="text-black dark:text-white font-bold">{comment.userName}</span>
                     &nbsp;&nbsp;•&nbsp;&nbsp;
-                    {new Date(comment.createdAt).toLocaleDateString()}
+                    {new Date(comment.date).toLocaleDateString()}
                   </div>
                   <div className="text-black dark:text-white">{comment.content}</div>
+                  <LikeComment
+                    session={session || null}
+                    likes={comment.likes}
+                    id={comment._id.toString()}
+                    gameID={id}
+                    likeComment={likeComment}
+                  />
                 </div>
               );
             })
